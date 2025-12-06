@@ -118,8 +118,12 @@
       padding: 20px;
       width: 95%;
       max-width: 480px;
+      max-height: 95vh;
+      overflow-y: auto;
       border-radius: 14px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
     }
 
     .popup-img {
@@ -148,19 +152,23 @@
       font-size: 16px;
     }
 
-    @media (max-width: 768px) {
-      header {
-        font-size: 18px;
-        padding: 20px;
+    @media (max-width: 600px) {
+      #objectPopup {
+        padding: 16px;
+        max-height: 90vh;
       }
 
-      .object-card img, .popup-img {
-        height: 180px;
+      .field input,
+      .field textarea,
+      .field select {
+        font-size: 15px;
+        padding: 8px;
       }
 
-      .btn-primary, .btn-secondary {
-        padding: 10px 14px;
-        font-size: 14px;
+      .btn-primary,
+      .btn-secondary {
+        font-size: 15px;
+        padding: 10px;
       }
     }
   </style>
@@ -199,90 +207,50 @@
     <img id="popupImg" class="popup-img" src="" style="display:none;">
     <h3 id="objectTitle"></h3>
     <p id="objectDesc" style="color:#666;"></p>
-    <form>
+
+    <form action="https://formsubmit.co/birkle.d@web.de" method="POST">
+      <input type="text" name="_honey" style="display:none">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_subject" value="Neue Anfrage über Website">
+      <input type="hidden" name="_template" value="box">
+      <input type="hidden" name="_next" value="https://deine-domain.de/danke.html">
+
       <div class="field">
         <label>Name *</label>
-        <input type="text" required>
+        <input type="text" name="Name" required>
       </div>
+
       <div class="field">
         <label>E-Mail *</label>
-        <input type="email" required>
+        <input type="email" name="E-Mail" required>
       </div>
+
       <div class="field">
         <label>Telefon (optional)</label>
-        <input type="tel">
+        <input type="tel" name="Telefon">
       </div>
+
       <div class="field">
         <label>Besichtigungstermin?</label>
-        <select required>
+        <select name="Besichtigungstermin" required>
           <option value="">Bitte auswählen</option>
           <option>Ja, bitte Termin vorschlagen</option>
           <option>Nein, nur Informationen senden</option>
         </select>
       </div>
+
       <div class="field">
-        <label>Nachricht</label>
-        <textarea></textarea>
+        <label>Nachricht *</label>
+        <textarea name="Nachricht" rows="4" required></textarea>
       </div>
+
+      <p style="font-size: 13px; color: #666;">
+        Mit dem Absenden des Formulars stimmen Sie zu, dass Ihre Angaben per E-Mail an uns übermittelt werden.
+      </p>
+
       <button class="btn-primary" type="submit">Anfrage senden</button>
     </form>
+
     <button onclick="closeObject()" class="btn-secondary" style="margin-top: 10px;">Schließen</button>
   </div>
 </div>
-
-<script>
-const objekte = [
-  {
-    id: "obj1",
-    name: "Einzelgarage – Minoritenstraße 9, 88048 Friedrichshafen",
-    beschreibung: "15 m² • Abschließbar • Trockene Bauweise • Zentrale Lage",
-    lat: 47.67428,
-    lng: 9.41744,
-    img: "https://raw.githubusercontent.com/birkle-dev/Birkle-Immobilien-GmbH/main/IMG_3478.jpeg"
-  },
-  {
-    id: "obj2",
-    name: "Tiefgaragenplatz – Eugenstraße 41, 88045 Friedrichshafen",
-    beschreibung: "Tiefgaragenstellplatz • Einfacher Zugang • Gute Anbindung • Sofort verfügbar",
-    lat: 47.65473,
-    lng: 9.47141,
-    img: "https://raw.githubusercontent.com/birkle-dev/Birkle-Immobilien-GmbH/main/IMG_2152.jpeg"
-  }
-];
-
-const map = L.map('map');
-const bounds = L.latLngBounds(objekte.map(o => [o.lat, o.lng]));
-map.fitBounds(bounds);
-
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '&copy; OpenStreetMap-Mitwirkende'
-}).addTo(map);
-
-objekte.forEach(o => {
-  const m = L.marker([o.lat, o.lng]).addTo(map);
-  m.bindPopup(`
-    <strong>${o.name}</strong><br>
-    ${o.beschreibung}<br><br>
-    <button onclick="openObject('${o.id}')" 
-    style="padding:6px 10px; border:none; background:var(--blau); color:#fff; border-radius:6px; cursor:pointer;">
-      Details & Anfrage →
-    </button>
-  `);
-});
-
-function openObject(id) {
-  const o = objekte.find(x => x.id === id);
-  document.getElementById("popupImg").src = o.img || '';
-  document.getElementById("popupImg").style.display = o.img ? "block" : "none";
-  document.getElementById("objectTitle").textContent = o.name;
-  document.getElementById("objectDesc").textContent = o.beschreibung;
-  document.getElementById("objectOverlay").style.display = "flex";
-}
-
-function closeObject() {
-  document.getElementById("objectOverlay").style.display = "none";
-}
-</script>
-
-</body>
-</html>
