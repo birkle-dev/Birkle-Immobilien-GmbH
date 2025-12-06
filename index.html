@@ -209,47 +209,49 @@
     <p id="objectDesc" style="color:#666;"></p>
 
     <!-- Anfrage-Formular mit Formspree -->
+<form action="https://formsubmit.co/birkle.d@web.de" method="POST">
+  <!-- Anti-Spam / Hidden Fields -->
+  <input type="hidden" name="_captcha" value="false">
+  <input type="hidden" name="_template" value="box">
+  <input type="hidden" name="_next" value="https://deine-domain.de/danke.html">
+  <input type="text" name="_honey" style="display:none">
 
-  <form
-  action="https://formspree.io/f/mwkzkbaz"  <!-- Ersetze dies mit deiner echten ID -->
-  class="fs-form"
-  method="POST"
->
-  <div class="fs-field">
-    <label class="fs-label" for="name">Name</label>
-    <input class="fs-input" id="name" name="name" required />
+  <!-- Formularfelder -->
+  <div class="field">
+    <label for="name">Name *</label>
+    <input type="text" id="name" name="name" required>
   </div>
 
-  <div class="fs-field">
-    <label class="fs-label" for="email">E-Mail</label>
-    <input class="fs-input" id="email" name="email" type="email" required />
+  <div class="field">
+    <label for="email">E-Mail *</label>
+    <input type="email" id="email" name="email" required>
   </div>
 
-  <div class="fs-field">
-    <label class="fs-label" for="telefon">Telefon (optional)</label>
-    <input class="fs-input" id="telefon" name="telefon" type="tel" />
+  <div class="field">
+    <label for="telefon">Telefon (optional)</label>
+    <input type="tel" id="telefon" name="telefon">
   </div>
 
-  <div class="fs-field">
-    <label class="fs-label" for="termin">Besichtigungstermin?</label>
-    <select class="fs-input" id="termin" name="termin" required>
+  <div class="field">
+    <label for="termin">Besichtigungstermin?</label>
+    <select id="termin" name="termin" required>
       <option value="">Bitte auswählen</option>
       <option value="Ja">Ja, bitte Termin vorschlagen</option>
       <option value="Nein">Nein, nur Informationen senden</option>
     </select>
   </div>
 
-  <div class="fs-field">
-    <label class="fs-label" for="nachricht">Nachricht</label>
-    <textarea class="fs-input" id="nachricht" name="nachricht" rows="4" required></textarea>
+  <div class="field">
+    <label for="nachricht">Nachricht *</label>
+    <textarea id="nachricht" name="nachricht" rows="4" required></textarea>
   </div>
 
-  <input type="hidden" name="_next" value="https://deine-domain.de/danke.html" />
-  <input type="hidden" name="_captcha" value="false" />
+  <p style="font-size: 13px; color: #666;">
+    Mit dem Absenden des Formulars stimmen Sie zu, dass Ihre Angaben per E-Mail an uns übermittelt werden.
+  </p>
 
-  <button type="submit" class="fs-button">Anfrage senden</button>
+  <button type="submit">Anfrage senden</button>
 </form>
-
 
 
 
