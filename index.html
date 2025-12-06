@@ -208,48 +208,45 @@
     <h3 id="objectTitle"></h3>
     <p id="objectDesc" style="color:#666;"></p>
 
-    <form action="https://formsubmit.co/Daniel.Birkle@uni-konstanz.de" method="POST">
-      <input type="text" name="_honey" style="display:none">
-      <input type="hidden" name="_captcha" value="false">
-      <input type="hidden" name="_subject" value="Neue Anfrage über Website">
-      <input type="hidden" name="_template" value="box">
-      <input type="hidden" name="_next" value="danke.html">
+    <!-- Anfrage-Formular mit Formspree -->
+<form action="https://formspree.io/f/DEIN_FORMULAR_ID" method="POST">
+  <div class="field">
+    <label>Name *</label>
+    <input type="text" name="name" required>
+  </div>
 
-      <div class="field">
-        <label>Name *</label>
-        <input type="text" name="Name" required>
-      </div>
+  <div class="field">
+    <label>E-Mail *</label>
+    <input type="email" name="email" required>
+  </div>
 
-      <div class="field">
-        <label>E-Mail *</label>
-        <input type="email" name="E-Mail" required>
-      </div>
+  <div class="field">
+    <label>Telefon (optional)</label>
+    <input type="tel" name="telefon">
+  </div>
 
-      <div class="field">
-        <label>Telefon (optional)</label>
-        <input type="tel" name="Telefon">
-      </div>
+  <div class="field">
+    <label>Besichtigungstermin?</label>
+    <select name="termin" required>
+      <option value="">Bitte auswählen</option>
+      <option>Ja, bitte Termin vorschlagen</option>
+      <option>Nein, nur Informationen senden</option>
+    </select>
+  </div>
 
-      <div class="field">
-        <label>Besichtigungstermin?</label>
-        <select name="Besichtigungstermin" required>
-          <option value="">Bitte auswählen</option>
-          <option>Ja, bitte Termin vorschlagen</option>
-          <option>Nein, nur Informationen senden</option>
-        </select>
-      </div>
+  <div class="field">
+    <label>Nachricht *</label>
+    <textarea name="nachricht" rows="4" required></textarea>
+  </div>
 
-      <div class="field">
-        <label>Nachricht *</label>
-        <textarea name="Nachricht" rows="4" required></textarea>
-      </div>
+  <!-- Optionaler Datenschutztext -->
+  <p style="font-size: 13px; color: #666;">
+    Mit dem Absenden des Formulars stimmen Sie der Verarbeitung Ihrer Daten gemäß unserer Datenschutzerklärung zu.
+  </p>
 
-      <p style="font-size: 13px; color: #666;">
-        Mit dem Absenden des Formulars stimmen Sie zu, dass Ihre Angaben per E-Mail an uns übermittelt werden.
-      </p>
+  <button class="btn-primary" type="submit">Anfrage senden</button>
+</form>
 
-      <button class="btn-primary" type="submit">Anfrage senden</button>
-    </form>
 
     <button onclick="closeObject()" class="btn-secondary" style="margin-top: 10px;">Schließen</button>
   </div>
