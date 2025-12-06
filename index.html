@@ -44,15 +44,15 @@
 
         .object-card img {
             width: 100%;
-            height: 180px;       /* kompaktere Höhe */
-            object-fit: cover;   /* sauberer Zuschnitt */
+            height: 180px;
+            object-fit: cover;
             border-radius: 8px;
             margin-bottom: 10px;
         }
 
         .popup-img {
             width: 100%;
-            height: 220px;       /* Popup etwas größer */
+            height: 220px;
             object-fit: cover;
             border-radius: 8px;
             margin-bottom: 12px;
@@ -121,7 +121,7 @@
 <section>
     <h2>Verfügbare Objekte</h2>
 
-    <!-- Objekt Minoritenstraße MIT Bild -->
+    <!-- Objekt Minoritenstraße -->
     <div class="object-card">
         <img src="https://raw.githubusercontent.com/birkle-dev/Birkle-Immobilien-GmbH/main/IMG_3478.jpeg"
              alt="Einzelgarage Minoritenstraße 9">
@@ -130,7 +130,7 @@
         <button class="btn-secondary" onclick="openObject('obj1')">Details & Anfrage →</button>
     </div>
 
-    <!-- Objekt Eugenstraße MIT Bild -->
+    <!-- Objekt Eugenstraße -->
     <div class="object-card">
         <img src="https://raw.githubusercontent.com/birkle-dev/Birkle-Immobilien-GmbH/main/IMG_2152.jpeg"
              alt="Tiefgarage Eugenstraße 41">
@@ -138,7 +138,6 @@
         <p>Tiefgarage • Sichere Stellfläche • Gute Erreichbarkeit</p>
         <button class="btn-secondary" onclick="openObject('obj2')">Details & Anfrage →</button>
     </div>
-
 </section>
 
 <section>
@@ -197,27 +196,30 @@ const objekte = [
         id: "obj1",
         name: "Einzelgarage – Minoritenstraße 9, 88048 Friedrichshafen",
         beschreibung: "15 m² • Abschließbar • Trockene Bauweise • Zentrale Lage",
-        lat: 47.65960,
-        lng: 9.47485,
+        lat: 47.667476,
+        lng: 9.471954,
         img: "https://raw.githubusercontent.com/birkle-dev/Birkle-Immobilien-GmbH/main/IMG_3478.jpeg"
     },
     {
         id: "obj2",
         name: "Tiefgaragenplatz – Eugenstraße 41, 88045 Friedrichshafen",
         beschreibung: "Tiefgaragenstellplatz • Einfacher Zugang • Gute Anbindung • Sofort verfügbar",
-        lat: 47.6565,
-        lng: 9.4775,
+        lat: 47.652709,
+        lng: 9.479505,
         img: "https://raw.githubusercontent.com/birkle-dev/Birkle-Immobilien-GmbH/main/IMG_2152.jpeg"
     }
 ];
 
-// Karte
-const map = L.map('map').setView([47.658, 9.476], 14);
+// Karte initialisieren mit Bounds für alle Marker
+const map = L.map('map');
+const bounds = L.latLngBounds(objekte.map(o => [o.lat, o.lng]));
+map.fitBounds(bounds);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap-Mitwirkende'
 }).addTo(map);
 
+// Marker setzen
 objekte.forEach(o => {
     const m = L.marker([o.lat, o.lng]).addTo(map);
     m.bindPopup(`
