@@ -7,6 +7,11 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <style>
+    :root {
+      --blau: #2c3e50;
+      --gold: #c0a96e;
+    }
+
     body {
       background: #ffffff;
       color: #333;
@@ -16,18 +21,18 @@
     }
 
     header {
-      background-color: #1e4a7b;
+      background-color: var(--blau);
       color: white;
       padding: 25px;
       font-size: 24px;
       font-weight: bold;
       text-align: center;
-      border-bottom: 4px solid gold;
+      border-bottom: 4px solid var(--gold);
       text-transform: uppercase;
     }
 
     h2, h3 {
-      color: #1e4a7b;
+      color: var(--blau);
       border-bottom: 1px solid #ddd;
       padding-bottom: 6px;
       margin-bottom: 20px;
@@ -69,25 +74,25 @@
     }
 
     .btn-primary {
-      background: #1e4a7b;
+      background: var(--blau);
       color: white;
       border: none;
       border-radius: 6px;
     }
 
     .btn-primary:hover {
-      background: #16385d;
+      background: #1b2b3c;
     }
 
     .btn-secondary {
       background: white;
-      color: #1e4a7b;
-      border: 2px solid #1e4a7b;
+      color: var(--blau);
+      border: 2px solid var(--blau);
       border-radius: 6px;
     }
 
     .btn-secondary:hover {
-      background: #1e4a7b;
+      background: var(--blau);
       color: white;
     }
 
@@ -259,7 +264,7 @@ objekte.forEach(o => {
     <strong>${o.name}</strong><br>
     ${o.beschreibung}<br><br>
     <button onclick="openObject('${o.id}')" 
-    style="padding:6px 10px; border:none; background:#1e4a7b; color:#fff; border-radius:6px; cursor:pointer;">
+    style="padding:6px 10px; border:none; background:var(--blau); color:#fff; border-radius:6px; cursor:pointer;">
       Details & Anfrage →
     </button>
   `);
