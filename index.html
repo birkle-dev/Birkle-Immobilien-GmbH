@@ -202,47 +202,51 @@
     <p id="objectDesc" style="color:#666;"></p>
 
     <!-- Kontaktformular -->
-    <form action="https://formsubmit.co/birkle.d@web.de" method="POST">
-      <input type="hidden" name="_captcha" value="false">
-      <input type="hidden" name="_template" value="box">
-      <input type="hidden" name="_next" value="https://deine-domain.de/danke.html">
-      <input type="text" name="_honey" style="display:none">
+    <form action="https://formsubmit.co/daniel.birkle47@gmail.com" method="POST">
+  <!-- Anti-Spam -->
+  <input type="text" name="_honey" style="display:none">
+  <input type="hidden" name="_captcha" value="false">
 
-      <div class="field">
-        <label for="name">Name *</label>
-        <input type="text" id="name" name="Name" required>
-      </div>
+  <!-- Weiterleitung nach dem Absenden -->
+  <input type="hidden" name="_next" value="https://deine-domain.de/danke.html">
+  <input type="hidden" name="_template" value="box">
+  <input type="hidden" name="_subject" value="Neue Anfrage über Garagen-Website">
 
-      <div class="field">
-        <label for="email">E-Mail *</label>
-        <input type="email" id="email" name="E-Mail" required>
-      </div>
+  <div class="field">
+    <label for="name">Name *</label>
+    <input type="text" id="name" name="Name" required>
+  </div>
 
-      <div class="field">
-        <label for="telefon">Telefon (optional)</label>
-        <input type="tel" id="telefon" name="Telefon">
-      </div>
+  <div class="field">
+    <label for="email">E-Mail *</label>
+    <input type="email" id="email" name="E-Mail" required>
+  </div>
 
-      <div class="field">
-        <label for="termin">Besichtigungstermin?</label>
-        <select id="termin" name="Besichtigungstermin" required>
-          <option value="">Bitte auswählen</option>
-          <option>Ja, bitte Termin vorschlagen</option>
-          <option>Nein, nur Informationen senden</option>
-        </select>
-      </div>
+  <div class="field">
+    <label for="telefon">Telefon (optional)</label>
+    <input type="tel" id="telefon" name="Telefon">
+  </div>
 
-      <div class="field">
-        <label for="nachricht">Nachricht *</label>
-        <textarea id="nachricht" name="Nachricht" rows="4" required></textarea>
-      </div>
+  <div class="field">
+    <label for="termin">Besichtigungstermin?</label>
+    <select id="termin" name="Besichtigungstermin" required>
+      <option value="">Bitte auswählen</option>
+      <option>Ja, bitte Termin vorschlagen</option>
+      <option>Nein, nur Informationen senden</option>
+    </select>
+  </div>
 
-      <p style="font-size: 13px; color: #666;">
-        Mit dem Absenden des Formulars stimmen Sie zu, dass Ihre Angaben per E-Mail an uns übermittelt werden.
-      </p>
+  <div class="field">
+    <label for="nachricht">Nachricht *</label>
+    <textarea id="nachricht" name="Nachricht" rows="4" required></textarea>
+  </div>
 
-      <button class="btn-primary" type="submit">Anfrage senden</button>
-    </form>
+  <p style="font-size: 13px; color: #666;">
+    Mit dem Absenden des Formulars stimmen Sie zu, dass Ihre Angaben per E-Mail an uns übermittelt werden.
+  </p>
+
+  <button class="btn-primary" type="submit">Anfrage senden</button>
+</form>
 
     <button onclick="closeObject()" class="btn-secondary" style="margin-top: 10px;">Schließen</button>
   </div>
