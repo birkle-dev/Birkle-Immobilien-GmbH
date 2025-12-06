@@ -209,43 +209,46 @@
     <p id="objectDesc" style="color:#666;"></p>
 
     <!-- Anfrage-Formular mit Formspree -->
-<form action="https://formspree.io/f/DEIN_FORMULAR_ID" method="POST">
-  <div class="field">
-    <label>Name *</label>
-    <input type="text" name="name" required>
+<form
+  action="https://formspree.io/f/mwkzkbaz"  <!-- Ersetze dies mit deiner echten ID -->
+  class="fs-form"
+  method="POST"
+>
+  <div class="fs-field">
+    <label class="fs-label" for="name">Name</label>
+    <input class="fs-input" id="name" name="name" required />
   </div>
 
-  <div class="field">
-    <label>E-Mail *</label>
-    <input type="email" name="email" required>
+  <div class="fs-field">
+    <label class="fs-label" for="email">E-Mail</label>
+    <input class="fs-input" id="email" name="email" type="email" required />
   </div>
 
-  <div class="field">
-    <label>Telefon (optional)</label>
-    <input type="tel" name="telefon">
+  <div class="fs-field">
+    <label class="fs-label" for="telefon">Telefon (optional)</label>
+    <input class="fs-input" id="telefon" name="telefon" type="tel" />
   </div>
 
-  <div class="field">
-    <label>Besichtigungstermin?</label>
-    <select name="termin" required>
+  <div class="fs-field">
+    <label class="fs-label" for="termin">Besichtigungstermin?</label>
+    <select class="fs-input" id="termin" name="termin" required>
       <option value="">Bitte auswählen</option>
-      <option>Ja, bitte Termin vorschlagen</option>
-      <option>Nein, nur Informationen senden</option>
+      <option value="Ja">Ja, bitte Termin vorschlagen</option>
+      <option value="Nein">Nein, nur Informationen senden</option>
     </select>
   </div>
 
-  <div class="field">
-    <label>Nachricht *</label>
-    <textarea name="nachricht" rows="4" required></textarea>
+  <div class="fs-field">
+    <label class="fs-label" for="nachricht">Nachricht</label>
+    <textarea class="fs-input" id="nachricht" name="nachricht" rows="4" required></textarea>
   </div>
 
-  <!-- Optionaler Datenschutztext -->
-  <p style="font-size: 13px; color: #666;">
-    Mit dem Absenden des Formulars stimmen Sie der Verarbeitung Ihrer Daten gemäß unserer Datenschutzerklärung zu.
-  </p>
+  <input type="hidden" name="_next" value="https://deine-domain.de/danke.html" />
+  <input type="hidden" name="_captcha" value="false" />
 
-  <button class="btn-primary" type="submit">Anfrage senden</button>
+  <button type="submit" class="fs-button">Anfrage senden</button>
 </form>
+
 
 
     <button onclick="closeObject()" class="btn-secondary" style="margin-top: 10px;">Schließen</button>
