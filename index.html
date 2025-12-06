@@ -254,3 +254,60 @@
     <button onclick="closeObject()" class="btn-secondary" style="margin-top: 10px;">Schließen</button>
   </div>
 </div>
+
+<script>
+const objekte = [
+  {
+    id: "obj1",
+    name: "Einzelgarage – Minoritenstraße 9, 88048 Friedrichshafen",
+    beschreibung: "15 m² • Abschließbar • Trockene Bauweise • Zentrale Lage",
+    lat: 47.67428,
+    lng: 9.41744,
+    img: "https://raw.githubusercontent.com/birkle-dev/Birkle-Immobilien-GmbH/main/IMG_3478.jpeg"
+  },
+  {
+    id: "obj2",
+    name: "Tiefgaragenplatz – Eugenstraße 41, 88045 Friedrichshafen",
+    beschreibung: "Tiefgaragenstellplatz • Einfacher Zugang • Gute Anbindung • Sofort verfügbar",
+    lat: 47.65473,
+    lng: 9.47141,
+    img: "https://raw.githubusercontent.com/birkle-dev/Birkle-Immobilien-GmbH/main/IMG_2152.jpeg"
+  }
+];
+
+const map = L.map('map');
+const bounds = L.latLngBounds(objekte.map(o => [o.lat, o.lng]));
+map.fitBounds(bounds);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; OpenStreetMap-Mitwirkende'
+}).addTo(map);
+
+objekte.forEach(o => {
+  const m = L.marker([o.lat, o.lng]).addTo(map);
+  m.bindPopup(`
+    <strong>${o.name}</strong><br>
+    ${o.beschreibung}<br><br>
+    <button onclick="openObject('${o.id}')" 
+      style="padding:6px 10px; border:none; background:var(--blau); color:#fff; border-radius:6px; cursor:pointer;">
+      Details & Anfrage →
+    </button>
+  `);
+});
+
+function openObject(id) {
+  const o = objekte.find(x => x.id === id);
+  document.getElementById("popupImg").src = o.img || '';
+  document.getElementById("popupImg").style.display = o.img ? "block" : "none";
+  document.getElementById("objectTitle").textContent = o.name;
+  document.getElementById("objectDesc").textContent = o.beschreibung;
+  document.getElementById("objectOverlay").style.display = "flex";
+}
+
+function closeObject() {
+  document.getElementById("objectOverlay").style.display = "none";
+}
+</script>
+
+</body>
+</html>
