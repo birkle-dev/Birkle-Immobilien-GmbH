@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
   <style>
     :root {
       --blau: #2c3e50;
@@ -59,6 +60,13 @@
       object-fit: cover;
       border-radius: 10px;
       margin-bottom: 15px;
+    }
+
+    .object-data {
+      margin-bottom: 12px;
+      color: #444;
+      font-size: 15px;
+      line-height: 1.5;
     }
 
     .btn-primary, .btn-secondary {
@@ -173,17 +181,37 @@
 <section>
   <h2>Verfügbare Objekte</h2>
 
+  <!-- Objekt 1 -->
   <div class="object-card">
     <img src="https://raw.githubusercontent.com/birkle-dev/Birkle-Immobilien-GmbH/main/IMG_3478.jpeg" alt="Einzelgarage Minoritenstraße 9">
+
     <h3>Einzelgarage – Minoritenstraße 9, 88048 Friedrichshafen</h3>
-    <p>15 m² • Trockene Bauweise • Abschließbar • Zentrale Lage</p>
+
+    <div class="object-data">
+      <strong>Maße (HxLxB):</strong> 1,5 × 4,2 × 2,5 m<br>
+      <strong>Miete:</strong> 120 €<br>
+      <strong>Kündigungsfrist:</strong> monatlich<br>
+      <strong>Kaution:</strong> 210 €<br>
+      <strong>Art:</strong> Einzelgarage
+    </div>
+
     <button class="btn-secondary" onclick="openObject('obj1')">Details & Anfrage →</button>
   </div>
 
+  <!-- Objekt 2 -->
   <div class="object-card">
     <img src="https://raw.githubusercontent.com/birkle-dev/Birkle-Immobilien-GmbH/main/IMG_2152.jpeg" alt="Tiefgarage Eugenstraße 41">
+
     <h3>Tiefgaragenplatz – Eugenstraße 41, 88045 Friedrichshafen</h3>
-    <p>Tiefgarage • Sichere Stellfläche • Gute Erreichbarkeit</p>
+
+    <div class="object-data">
+      <strong>Maße (HxLxB):</strong> 2,0 × 5,0 × 2,4 m<br>
+      <strong>Miete:</strong> 95 €<br>
+      <strong>Kündigungsfrist:</strong> monatlich<br>
+      <strong>Kaution:</strong> 150 €<br>
+      <strong>Art:</strong> Tiefgaragenstellplatz
+    </div>
+
     <button class="btn-secondary" onclick="openObject('obj2')">Details & Anfrage →</button>
   </div>
 </section>
@@ -198,16 +226,13 @@
 <div id="objectOverlay">
   <div id="objectPopup">
     <img id="popupImg" class="popup-img" src="" style="display:none;">
+
     <h3 id="objectTitle"></h3>
-    <p id="objectDesc" style="color:#666;"></p>
+    <p id="objectDesc" style="color:#444;"></p>
 
-    <!-- Kontaktformular (NEU: Web3Forms integriert) -->
+    <!-- Kontaktformular -->
     <form action="https://api.web3forms.com/submit" method="POST">
-
-      <!-- Web3Forms Key -->
       <input type="hidden" name="access_key" value="dde35a94-0d62-46b7-82dd-230170bdf26c">
-
-      <!-- Anti-Spam Honeypot -->
       <input type="text" name="botcheck" style="display:none">
 
       <div class="field">
@@ -255,7 +280,13 @@ const objekte = [
   {
     id: "obj1",
     name: "Einzelgarage – Minoritenstraße 9, 88048 Friedrichshafen",
-    beschreibung: "15 m² • Abschließbar • Trockene Bauweise • Zentrale Lage",
+    beschreibung: `
+      Maße (HxLxB): 1,5 × 4,2 × 2,5 m<br>
+      Miete: 120 €<br>
+      Kündigungsfrist: monatlich<br>
+      Kaution: 210 €<br>
+      Art: Einzelgarage
+    `,
     lat: 47.67428,
     lng: 9.41744,
     img: "https://raw.githubusercontent.com/birkle-dev/Birkle-Immobilien-GmbH/main/IMG_3478.jpeg"
@@ -263,7 +294,13 @@ const objekte = [
   {
     id: "obj2",
     name: "Tiefgaragenplatz – Eugenstraße 41, 88045 Friedrichshafen",
-    beschreibung: "Tiefgaragenstellplatz • Einfacher Zugang • Gute Anbindung • Sofort verfügbar",
+    beschreibung: `
+      Maße (HxLxB): 2,0 × 5,0 × 2,4 m<br>
+      Miete: 95 €<br>
+      Kündigungsfrist: monatlich<br>
+      Kaution: 150 €<br>
+      Art: Tiefgaragenstellplatz
+    `,
     lat: 47.65473,
     lng: 9.47141,
     img: "https://raw.githubusercontent.com/birkle-dev/Birkle-Immobilien-GmbH/main/IMG_2152.jpeg"
@@ -281,10 +318,10 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 objekte.forEach(o => {
   const m = L.marker([o.lat, o.lng]).addTo(map);
   m.bindPopup(`
-    <strong>${o.name}</strong><br>
-    ${o.beschreibung}<br><br>
-    <button onclick="openObject('${o.id}')" 
-    style="padding:6px 10px; border:none; background:var(--blau); color:#fff; border-radius:6px; cursor:pointer;">
+    <strong>${o.name}</strong><br><br>
+    ${o.beschreibung}<br>
+    <button onclick="openObject('${o.id}')"
+      style="padding:6px 10px; border:none; background:var(--blau); color:#fff; border-radius:6px; cursor:pointer; margin-top:8px;">
       Details & Anfrage →
     </button>
   `);
@@ -295,7 +332,7 @@ function openObject(id) {
   document.getElementById("popupImg").src = o.img || '';
   document.getElementById("popupImg").style.display = o.img ? "block" : "none";
   document.getElementById("objectTitle").textContent = o.name;
-  document.getElementById("objectDesc").textContent = o.beschreibung;
+  document.getElementById("objectDesc").innerHTML = o.beschreibung;
   document.getElementById("objectOverlay").style.display = "flex";
 }
 
