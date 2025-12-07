@@ -138,40 +138,21 @@
       margin-bottom: 12px;
     }
 
-    .field {
-      margin-bottom: 16px;
+    .gallery-controls {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
     }
 
-    .field label {
-      font-weight: 600;
-      display: block;
-      margin-bottom: 5px;
-    }
-
-    input, textarea, select {
-      width: 100%;
-      padding: 10px;
+    .gallery-controls button {
+      background: var(--blau);
+      color: white;
+      border: none;
+      padding: 8px 14px;
       border-radius: 6px;
-      border: 1px solid #ccc;
-      font-size: 16px;
+      cursor: pointer;
     }
 
-    @media (max-width: 600px) {
-      #objectPopup {
-        padding: 16px;
-        max-height: 90vh;
-      }
-
-      .btn-primary, .btn-secondary {
-        font-size: 15px;
-        padding: 10px;
-      }
-
-      input, textarea, select {
-        font-size: 15px;
-        padding: 8px;
-      }
-    }
   </style>
 </head>
 <body>
@@ -183,7 +164,7 @@
 
   <!-- Objekt 1 -->
   <div class="object-card">
-    <img src="https://raw.githubusercontent.com/birkle-dev/Birkle-Immobilien-GmbH/main/IMG_3478.jpeg" alt="Einzelgarage Minoritenstraße 9">
+    <img src="https://raw.githubusercontent.com/birkle-dev/Birkle-Immobilien-GmbH/main/IMG_3478.jpeg">
 
     <h3>Einzelgarage – Minoritenstraße 9, 88048 Friedrichshafen</h3>
 
@@ -200,7 +181,9 @@
 
   <!-- Objekt 2 -->
   <div class="object-card">
-    <img src="https://raw.githubusercontent.com/birkle-dev/Birkle-Immobilien-GmbH/main/IMG_2152.jpeg" alt="Tiefgarage Eugenstraße 41">
+
+    <!-- Nur Vorschaubild -->
+    <img src="https://raw.githubusercontent.com/birkle-dev/Birkle-Immobilien-GmbH/main/IMG_1464.JPG">
 
     <h3>Tiefgaragenplatz – Eugenstraße 41, 88045 Friedrichshafen</h3>
 
@@ -218,17 +201,22 @@
 
 <section>
   <h2>Objekte auf der Karte</h2>
-  <p>Klicken Sie auf die Markierungen, um Details zu sehen oder eine Anfrage zu stellen.</p>
   <div id="map"></div>
 </section>
 
 <!-- Popup -->
 <div id="objectOverlay">
   <div id="objectPopup">
+
+    <div class="gallery-controls">
+      <button onclick="prevImg()">←</button>
+      <button onclick="nextImg()">→</button>
+    </div>
+
     <img id="popupImg" class="popup-img" src="" style="display:none;">
 
     <h3 id="objectTitle"></h3>
-    <p id="objectDesc" style="color:#444;"></p>
+    <p id="objectDesc"></p>
 
     <!-- Kontaktformular -->
     <form action="https://api.web3forms.com/submit" method="POST">
@@ -264,18 +252,18 @@
         <textarea id="nachricht" name="Nachricht" rows="4" required></textarea>
       </div>
 
-      <p style="font-size: 13px; color: #666;">
-        Mit dem Absenden des Formulars stimmen Sie zu, dass Ihre Angaben per E-Mail an uns übermittelt werden.
-      </p>
-
       <button class="btn-primary" type="submit">Anfrage senden</button>
     </form>
 
     <button onclick="closeObject()" class="btn-secondary" style="margin-top: 10px;">Schließen</button>
+
   </div>
 </div>
 
 <script>
+let currentGallery = [];
+let currentImgIndex = 0;
+
 const objekte = [
   {
     id: "obj1",
@@ -289,7 +277,9 @@ const objekte = [
     `,
     lat: 47.67428,
     lng: 9.41744,
-    img: "https://raw.githubusercontent.com/birkle-dev/Birkle-Immobilien-GmbH/main/IMG_3478.jpeg"
+    images: [
+      "https://raw.githubusercontent.com/birkle-dev/Birkle-Immobilien-GmbH/main/IMG_3478.jpeg"
+    ]
   },
   {
     id: "obj2",
@@ -303,17 +293,19 @@ const objekte = [
     `,
     lat: 47.65473,
     lng: 9.47141,
-    img: "https://raw.githubusercontent.com/birkle-dev/Birkle-Immobilien-GmbH/main/IMG_2152.jpeg"
+    images: [
+      "https://raw.githubusercontent.com/birkle-dev/Birkle-Immobilien-GmbH/main/IMG_1464.JPG",
+      "https://raw.githubusercontent.com/birkle-dev/Birkle-Immobilien-GmbH/main/IMG_1467.JPG",
+      "https://raw.githubusercontent.com/birkle-dev/Birkle-Immobilien-GmbH/main/IMG_1468.JPG",
+      "https://raw.githubusercontent.com/birkle-dev/Birkle-Immobilien-GmbH/main/IMG_1469.JPG"
+    ]
   }
 ];
 
 const map = L.map('map');
-const bounds = L.latLngBounds(objekte.map(o => [o.lat, o.lng]));
-map.fitBounds(bounds);
+map.fitBounds(L.latLngBounds(objekte.map(o => [o.lat, o.lng])));
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '&copy; OpenStreetMap-Mitwirkende'
-}).addTo(map);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
 objekte.forEach(o => {
   const m = L.marker([o.lat, o.lng]).addTo(map);
@@ -321,7 +313,7 @@ objekte.forEach(o => {
     <strong>${o.name}</strong><br><br>
     ${o.beschreibung}<br>
     <button onclick="openObject('${o.id}')"
-      style="padding:6px 10px; border:none; background:var(--blau); color:#fff; border-radius:6px; cursor:pointer; margin-top:8px;">
+      style="padding:6px 10px; background:var(--blau); color:#fff; border-radius:6px;">
       Details & Anfrage →
     </button>
   `);
@@ -329,11 +321,32 @@ objekte.forEach(o => {
 
 function openObject(id) {
   const o = objekte.find(x => x.id === id);
-  document.getElementById("popupImg").src = o.img || '';
-  document.getElementById("popupImg").style.display = o.img ? "block" : "none";
+
+  currentGallery = o.images;
+  currentImgIndex = 0;
+
+  updateGalleryImage();
+
   document.getElementById("objectTitle").textContent = o.name;
   document.getElementById("objectDesc").innerHTML = o.beschreibung;
+
   document.getElementById("objectOverlay").style.display = "flex";
+}
+
+function updateGalleryImage() {
+  const img = document.getElementById("popupImg");
+  img.src = currentGallery[currentImgIndex];
+  img.style.display = "block";
+}
+
+function nextImg() {
+  currentImgIndex = (currentImgIndex + 1) % currentGallery.length;
+  updateGalleryImage();
+}
+
+function prevImg() {
+  currentImgIndex = (currentImgIndex - 1 + currentGallery.length) % currentGallery.length;
+  updateGalleryImage();
 }
 
 function closeObject() {
